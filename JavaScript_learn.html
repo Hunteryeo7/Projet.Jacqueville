@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2> Fondamentaux du <strong>JavaScript </strong> </h2>
+
+    <h3 id="demo">Créer votre profil avec vos coordonnées de l'inscription</h3>
+    <button type="button" > Cliquez pour <strong>Valider</strong>
+
+    </button>
+    <p id="test"> Toute modification de l'objet copie modifiera l'objet d'origine</p>
+    <script>
+    //OBJET 
+    //Creat an objet 
+    const etudiant = {
+        nom:'Yeo',
+        prenom:'Nara',
+        age: 24 ,
+        niveau : 'master II',
+    };
+   
+    // Creat a copy
+    const x = etudiant ;
+    // Change Age
+    x.age= 25;
+
+    document.getElementById("test") .innerHTML= etudiant.nom + " " + etudiant.prenom +  " " + "a"+  " " +etudiant.age+ " " + "ans";
+
+
+
+    </script>
+
+
+    
+
+    <script>
+        //DESTRUCTURATION
+
+        const {firstName :prenom} ={
+            firstName : 'SORO',
+            lastName : 'NARA',
+            age : 23,
+
+        };
+        console.log(prenom);
+    </script>
+  <script src="MyScript.js"></script>  
+</body>
+</html>

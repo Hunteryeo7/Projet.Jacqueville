@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Carte Interactive avec Couches Multiples</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #map { width: 100%; height: 600px; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Initialisation de la carte
+        var map = L.map('map').setView([51.505, -0.09], 13);
+
+        // Ajout d'une couche de tuiles (basemap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        }).addTo(map);
+
+        // Chargement et ajout des couches GeoJSON
+        var geojsonLayer1, geojsonLayer2; // Définition des variables pour les couches
+
+        fetch('path/to/output/file1.geojson')
+            .then(response => response.json())
+            .then(data => {
+                geojsonLayer1 = L.geoJSON(data, {
+                    onEachFeature: function (feature, layer) {
+                        layer.bindPopup("Layer 1: " + feature.properties.name);
+                    }
+                }).addTo(map);
+            });
+
+        fetch('path/to/output/file2.geojson')
+            .then(response => response.json())
+            .then(data => {
+                geojsonLayer2 = L.geoJSON(data, {
+                    onEachFeature: function (feature, layer) {
+                        layer.bindPopup("Layer 2: " + feature.properties.name);
+                    }
+                }).addTo(map);
+            });
+
+        // Fonction pour ajouter des couches supplémentaires
+        function addLayer(geojsonPath, name) {
+            fetch(geojsonPath)
+                .then(response => response.json())
+                .then(data => {
+                    var newLayer = L.geoJSON(data, {
+                        onEachFeature: function (feature, layer) {
+                            layer.bindPopup(name + ": " + feature.properties.name);
+                        }
+                    });
+                    map.addLayer(newLayer);
+                });
+        }
+
+        // Exemple d'ajout de couche supplémentaire
+        addLayer('path/to/output/file3.geojson', 'Layer 3');
+        addLayer('path/to/output/file4.geojson', 'Layer 4');
+    </script>
+</body>
+</html>
